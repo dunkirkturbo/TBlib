@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2021.2.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\TBlib.dir/objects.a
+C:\PROGRA~1\mingw64\bin\ar.exe cr CMakeFiles\TBlib.dir/objects.a @CMakeFiles\TBlib.dir\objects1.rsp
+C:\PROGRA~1\mingw64\bin\G__~1.EXE -mavx -mavx2 -mfma -msse -msse2 -msse3   -g -Wl,--whole-archive CMakeFiles\TBlib.dir/objects.a -Wl,--no-whole-archive -o TBlib.exe -Wl,--out-implib,libTBlib.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\TBlib.dir\linklibs.rsp

@@ -1,0 +1,5 @@
+C:/Users/lenovo/Desktop/TBlib/cmake-build-debug/CMakeFiles/TBlib_extra.dir
+C:/Users/lenovo/Desktop/TBlib/cmake-build-debug/CMakeFiles/NTL.dir
+C:/Users/lenovo/Desktop/TBlib/cmake-build-debug/CMakeFiles/TBlib.dir
+C:/Users/lenovo/Desktop/TBlib/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/lenovo/Desktop/TBlib/cmake-build-debug/CMakeFiles/rebuild_cache.dir
