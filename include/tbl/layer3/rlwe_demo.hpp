@@ -163,6 +163,14 @@ public:
         }
     }
 
+    ~rlwe_demo() {
+        free_aligned(3, rlwe_key);
+        free_aligned(1, rlwe_pt);
+        free_aligned(2, rlwe_ct);
+        free_aligned(3, rlwe_noise);
+        free_aligned(1, rlwe_half_q);
+    }
+
     };
 
 }

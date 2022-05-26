@@ -145,12 +145,13 @@ int main() {
     rl.rlwe_keygen();
 
     char* pt = (char*)"0xDktb@rlwe_demo";
-    char ct[2048];
+    char ct[1024];
     char pt_edit[16];
 
     rl.rlwe_encrypt(ct, pt, 16);
+    uint8_t *ct_out = (uint8_t*)ct;
     for (int i = 0; i < 1024; i++) {
-        printf("%02x", ct[i]);
+        printf("%02x", ct_out[i]);
     }
     printf("\n");
     rl.rlwe_decrypt(pt_edit, ct, 16);
