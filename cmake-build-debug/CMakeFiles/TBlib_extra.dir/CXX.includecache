@@ -6,3 +6,35 @@
 
 #IncludeRegexTransform: 
 
+../include/tbl/helper/euclidean.hpp
+tuple
+-
+
+../include/tbl/helper/primer.hpp
+tbl/prng/randomInteger_mt19937.hpp
+../include/tbl/helper/tbl/prng/randomInteger_mt19937.hpp
+tbl/helper/euclidean.hpp
+../include/tbl/helper/tbl/helper/euclidean.hpp
+unordered_map
+-
+
+../include/tbl/params.hpp
+cinttypes
+-
+
+../include/tbl/prng/randomInteger_mt19937.hpp
+random
+-
+ctime
+-
+cassert
+-
+
+C:/Users/lenovo/Desktop/TBlib/lib/params.cpp
+tbl/params.hpp
+C:/Users/lenovo/Desktop/TBlib/lib/tbl/params.hpp
+
+C:/Users/lenovo/Desktop/TBlib/lib/primer.cpp
+tbl/helper/primer.hpp
+C:/Users/lenovo/Desktop/TBlib/lib/tbl/helper/primer.hpp
+

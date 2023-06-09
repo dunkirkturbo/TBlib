@@ -11,6 +11,7 @@
 #include <NTL/ZZ_pX.h>
 
 #define TEST_MULMOD
+#define TEST_MULMOD_AVX2
 #define TEST_POLYMUL_16
 //#define TEST_POLYMUL_32
 #define TEST_RLWE_CRYPT
@@ -58,19 +59,26 @@ int main() {
 //    pre_compute_primes();
 //    pre_compute_primitive_root();
     run<uint64_t>();
+    std::cout << std::endl;
 
-//    uint16_t a[16] __attribute__((aligned(32))) = {2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333};
-//    uint16_t b = 7777;
-//    __m256i veca, vecb, vecab, vec_tmp, vec_lo, vec_hi;
-//    __m256i vec_mont_M = _mm256_set1_epi16(tbl::params<uint16_t>::mont_M[0]);
-//    __m256i vec_modp = _mm256_set1_epi16(tbl::params<uint16_t>::primes[0]);
-//    __m256i z0 = _mm256_setzero_si256();
-//    __m256i z1 = _mm256_set1_epi16(1);
-//
-//    int benches = 100, rounds = 1000;
-//    BENCH_START("Time per avx2.mulmod (including 16 * uint16_t)", benches);
-//    BENCH_ITEM(veca = _mm256_load_si256((__m256i *)a);vecb = _mm256_set1_epi16(b);vec_lo = _mm256_mullo_epi16(veca, vecb);vec_hi = _mm256_mulhi_epu16(veca, vecb);vec_tmp = _mm256_mullo_epi16(vec_lo, vec_mont_M);vec_tmp = _mm256_mulhi_epu16(vec_tmp, vec_modp);vecab = _mm256_add_epi16(vec_tmp, vec_hi);vec_tmp = _mm256_cmpeq_epi16(vec_lo, z0);vec_tmp = _mm256_add_epi16(vec_tmp, z1);vecab = _mm256_add_epi16(vecab, vec_tmp);_mm256_store_si256((__m256i *)a, vecab);, rounds);
-//    BENCH_FINAL(benches, rounds);
+    int benches, rounds;
+
+#ifdef TEST_MULMOD_AVX2
+    uint16_t a[16] __attribute__((aligned(32))) = {2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333, 2333};
+    uint16_t b = 7777;
+    __m256i veca, vecb, vecab, vec_tmp, vec_lo, vec_hi;
+    __m256i vec_mont_M = _mm256_set1_epi16(tbl::params<uint16_t>::mont_M[0]);
+    __m256i vec_modp = _mm256_set1_epi16(tbl::params<uint16_t>::primes[0]);
+    __m256i z0 = _mm256_setzero_si256();
+    __m256i z1 = _mm256_set1_epi16(1);
+
+    benches = 100;
+    rounds = 1000;
+    BENCH_START("Time per avx2.mulmod (including 16 * uint16_t)", benches);
+    BENCH_ITEM(veca = _mm256_load_si256((__m256i *)a);vecb = _mm256_set1_epi16(b);vec_lo = _mm256_mullo_epi16(veca, vecb);vec_hi = _mm256_mulhi_epu16(veca, vecb);vec_tmp = _mm256_mullo_epi16(vec_lo, vec_mont_M);vec_tmp = _mm256_mulhi_epu16(vec_tmp, vec_modp);vecab = _mm256_add_epi16(vec_tmp, vec_hi);vec_tmp = _mm256_cmpeq_epi16(vec_lo, z0);vec_tmp = _mm256_add_epi16(vec_tmp, z1);vecab = _mm256_add_epi16(vecab, vec_tmp);_mm256_store_si256((__m256i *)a, vecab);, rounds);
+    BENCH_FINAL(benches, rounds);
+    std::cout << std::endl;
+#endif
 
     /*
      * AVX2 16-bit
@@ -88,7 +96,8 @@ int main() {
     NTL::random(h, d - 1);
     NTL::ZZ_pX res;
 
-    int benches = 50, rounds = 200;
+    benches = 50;
+    rounds = 200;
     BENCH_START("Time per NTL.MulMod", benches);
     BENCH_ITEM(NTL::MulMod(res, g, h, F), rounds);
 //    BENCH_ITEM(NTL::mul(res, g, h);, rounds); // mul use FFT(not mod), but slow also
@@ -122,7 +131,9 @@ int main() {
     NTL::random(g, d - 1);
     NTL::random(h, d - 1);
     NTL::ZZ_pX res;
-    int benches = 50, rounds = 200;
+
+    benches = 50;
+    rounds = 200;
     BENCH_START("Time per NTL.MulMod", benches);
     BENCH_ITEM(NTL::MulMod(res, g, h, f);, rounds);
     BENCH_FINAL(benches, rounds);
